@@ -27,7 +27,6 @@ public class ProjectoU1 {
      * @param fichero archivo classroom.txt donde se encuentan los datos
      */
     private static void LeerClassroom(File fichero) {
-        int numLineas=0;
         //Se intentara hacer la siguiente acción
         try {
             // Codificación ISO-8859-1 (ANSI) o UTF-8 dependiendo de cómo esté creado el fichero de texto
