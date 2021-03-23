@@ -19,7 +19,7 @@ public class ProjectoU1 {
      */
     public static void main(String[] args) {
         //Creamos un variable donde indicaremos el archivo a modificar
-         File fichero = new File("GestionAulas-G/classrooms.txt");
+         File fichero = new File("/GestionAulas-G6/classroom.txt");
          
          LeerClassroom(fichero);
     }
@@ -33,11 +33,9 @@ public class ProjectoU1 {
             // Se ejecutara un bucle con la finalidad de que se 
             while(lectorFichero.hasNext()) {
                 System.out.println(lectorFichero.nextLine());
-                numLineas++;
             }
             
             lectorFichero.close();
-            System.out.println("Existen "+numLineas+" aulas en classroom");
         } catch (Exception e) {
             //En caso de que no se encuentre el archivo pues se imprimo este mensaje de error
             System.out.println("El archivo classrooms no existe");
