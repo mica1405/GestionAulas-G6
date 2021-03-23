@@ -38,7 +38,7 @@ public class ProjectoU1 {
             lectorFichero.close();
         } catch (Exception e) {
             //En caso de que no se encuentre el archivo pues se imprimo este mensaje de error
-            System.out.println("El archivo classrooms no existe");
+            System.out.println("El archivo classrooms no existe o no se encuentra");
         }
     }
     
