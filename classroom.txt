@@ -1,0 +1,79 @@
+ID: M01
+Nombre aula: Aula 24
+Capacidad de alumnos: 25
+Hay pc: Sí
+Cantidad de pc: 25
+Proyector: Sí
+Insonorizada: Sí
+
+ID: M08
+Nombre aula: Aula 11
+Capacidad de alumnos: 25
+Hay pc: Sí
+Cantidad de pc: 25
+Proyector: Sí
+Insonorizada: No
+
+ID: M09
+Nombre aula: Aula 10
+Capacidad de alumnos: 30
+Hay pc: Sí
+Cantidad de pc: 32
+Proyector: Sí
+Insonorizada: Sí
+
+ID: M012
+Nombre aula: Aula 26
+Capacidad de alumnos: 25
+Hay pc: Si
+Cantidad de pc: 28
+Proyector: Sí
+Insonorizada: No
+
+ID: M04 
+Nombre aula: Aula 30
+Capacidad de alumnos: 25
+Hay pc: Si
+Cantidad de pc: 27
+Proyector: Sí
+Insonorizada: No
+
+ID: M010
+Nombre aula: Aula 25
+Capacidad de alumnos: 25
+Hay pc: Sí
+Cantidad de pc: 25
+Proyector: Sí
+Insonorizada: No
+
+ID: FOL
+Nombre aula: Aula 25
+Capacidad de alumnos: 25
+Hay pc: Sí
+Cantidad de pc: Null
+Proyector: Sí
+Insonorizada: Sí
+
+ID: EIE
+Nombre aula: Aula 25
+Capacidad de alumnos: 25
+Hay pc: Sí
+Cantidad de pc: Null
+Proyector: Sí
+Insonorizada: Sí
+
+ID: M05
+Nombre aula: Aula 30
+Capacidad de alumnos: 20
+Hay pc: Sí
+Cantidad de pc: 22
+Proyector: Sí
+Insonorizada: Sí
+
+ID: M06
+Nombre aula: Aula 05
+Capacidad de alumnos: 15
+Hay pc: Sí
+Cantidad de pc: 17
+Proyector: Sí
+Insonorizada: Sí
