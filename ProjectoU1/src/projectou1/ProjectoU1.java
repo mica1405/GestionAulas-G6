@@ -19,11 +19,13 @@ public class ProjectoU1 {
      */
     public static void main(String[] args) {
         //Creamos un variable donde indicaremos el archivo a modificar
-         File fichero = new File("/GestionAulas-G6/classroom.txt");
-         
+         File fichero = new File("/GestionAulas-G6/classroom.txt");         
          LeerClassroom(fichero);
     }
-
+    /**
+     * Esta funcion muestra los datos de las aulas  
+     * @param fichero archivo classroom.txt donde se encuentan los datos
+     */
     private static void LeerClassroom(File fichero) {
         int numLineas=0;
         //Se intentara hacer la siguiente acción
