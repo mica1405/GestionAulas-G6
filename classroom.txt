@@ -1,79 +1,11 @@
-ID: M01
-Nombre aula: Aula 24
-Capacidad de alumnos: 25
-Hay pc: Sí
-Cantidad de pc: 25
-Proyector: Sí
-Insonorizada: Sí
-
-ID: M08
-Nombre aula: Aula 11
-Capacidad de alumnos: 25
-Hay pc: Sí
-Cantidad de pc: 25
-Proyector: Sí
-Insonorizada: No
-
-ID: M09
-Nombre aula: Aula 10
-Capacidad de alumnos: 30
-Hay pc: Sí
-Cantidad de pc: 32
-Proyector: Sí
-Insonorizada: Sí
-
-ID: M012
-Nombre aula: Aula 26
-Capacidad de alumnos: 25
-Hay pc: Si
-Cantidad de pc: 28
-Proyector: Sí
-Insonorizada: No
-
-ID: M04 
-Nombre aula: Aula 30
-Capacidad de alumnos: 25
-Hay pc: Si
-Cantidad de pc: 27
-Proyector: Sí
-Insonorizada: No
-
-ID: M010
-Nombre aula: Aula 25
-Capacidad de alumnos: 25
-Hay pc: Sí
-Cantidad de pc: 25
-Proyector: Sí
-Insonorizada: No
-
-ID: FOL
-Nombre aula: Aula 25
-Capacidad de alumnos: 25
-Hay pc: Sí
-Cantidad de pc: Null
-Proyector: Sí
-Insonorizada: Sí
-
-ID: EIE
-Nombre aula: Aula 25
-Capacidad de alumnos: 25
-Hay pc: Sí
-Cantidad de pc: Null
-Proyector: Sí
-Insonorizada: Sí
-
-ID: M05
-Nombre aula: Aula 30
-Capacidad de alumnos: 20
-Hay pc: Sí
-Cantidad de pc: 22
-Proyector: Sí
-Insonorizada: Sí
-
-ID: M06
-Nombre aula: Aula 05
-Capacidad de alumnos: 15
-Hay pc: Sí
-Cantidad de pc: 17
-Proyector: Sí
-Insonorizada: Sí
+M01,Aula24,25,Si,25,Sí,Sí
+M08,Aula11,25,Sí,25,Sí,No
+M09,Aula10,30,Sí,32,Sí,Sí
+M012,Aula26,25,Si,28,Sí,No
+M04,Aula30,25,Sí,27,Sí,No
+M10,Aula25,25,Sí,25,Sí,No
+M05,Aula30,20,Sí,22,Sí,Sí
+M06,Aula05,15,Sí,17,Sí,Sí
+M15,Aula30,20,Si,22,Si,No
+FOL,Aula25,25,No,Null,Sí,Sí
+EIE,Aula25,25,No,Null,Sí,Sí 
