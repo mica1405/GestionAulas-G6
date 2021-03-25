@@ -19,28 +19,40 @@ public class ProjectoU1 {
      */
     public static void main(String[] args) {
         //Creamos un variable donde indicaremos el archivo a modificar
-         File fichero = new File("/GestionAulas-G6/classroom.txt");         
-         LeerClassroom(fichero);
+        File fichero = new File("/GestionAulas-G6/classroom.txt");
+        LeerClassroom(fichero);
     }
+
     /**
-     * Esta funcion muestra los datos de las aulas  
+     * Esta funcion muestra los datos de las aulas
+     *
      * @param fichero archivo classroom.txt donde se encuentan los datos
      */
     private static void LeerClassroom(File fichero) {
-        //Se intentara hacer la siguiente acción
+        int numLineas = 0;
+
         try {
             // Codificación ISO-8859-1 (ANSI) o UTF-8 dependiendo de cómo esté creado el fichero de texto
             Scanner lectorFichero = new Scanner(fichero, "UTF-8");
-            // Se ejecutara un bucle con la finalidad de que se 
-            while(lectorFichero.hasNext()) {
-                System.out.println(lectorFichero.nextLine());
+
+            while (lectorFichero.hasNext()) {
+                numLineas++;
+                String[] linea = lectorFichero.nextLine().split(",");
+                System.out.println("Id: " + linea[0]);
+                System.out.println("Nombre de aula: " + linea[1]);
+                System.out.println("Cantidad de alumnos: " + linea[2]);
+                System.out.println("Hay pc's: " + linea[3]);
+                System.out.println("Cantidad de pc's disponibles: " + linea[4]);
+                System.out.println("Hay proyector: " + linea[5]);
+                System.out.println("Insonorizada: " + linea[6]);
+                System.out.println("");
             }
-            
+
             lectorFichero.close();
+            System.out.println("Hay " + numLineas + " registros de aulas");
         } catch (Exception e) {
-            //En caso de que no se encuentre el archivo pues se imprimo este mensaje de error
-            System.out.println("El archivo classrooms no existe o no se encuentra");
+            System.out.println("Ha ocurrido un error al abrir/leer el fichero");
+
         }
     }
-    
 }
