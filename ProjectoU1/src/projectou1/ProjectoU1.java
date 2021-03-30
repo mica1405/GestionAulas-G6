@@ -99,7 +99,7 @@ public class ProjectoU1 {
      */
     private static void eliminarRegistro() {
         Scanner lector = new Scanner(System.in);
-        File fichero = new File("C:/M03/prueba.txt");
+        File fichero = new File("/GestionAulas-G6/classroom.txt");
         //Le pedimos al usuario que ID quiere eliminar
         //Creamos un variable en donde se guarda el ID que quiere eliminar el usuario 
         String ID;
