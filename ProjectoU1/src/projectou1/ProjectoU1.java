@@ -107,7 +107,7 @@ public class ProjectoU1 {
         for (int i = 0; i < cambiar.length; i++) {
             cambiar[i] = cambiar[i].substring(0, 1).toUpperCase() + cambiar[i].charAt(1);
         }
-        id = id.substring(0, 1).toUpperCase();
+        id = id.toUpperCase();
         nombreAula = nombreAula.substring(0, 1).toUpperCase() + nombreAula.substring(1);
         //String donde se guarda la linea de datos en formato CSV
         registroNuevo = "\n" + id + "," + nombreAula + "," + cantidadAlumnos + "," + cambiar[0] + "," + cantidadPc + "," + cambiar[1] + "," + cambiar[2];
