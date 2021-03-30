@@ -7,6 +7,7 @@ package projectou1;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -22,8 +23,8 @@ public class ProjectoU1 {
         //Creamos un variable donde indicaremos el archivo a modificar
         File fichero = new File("/GestionAulas-G6/classroom.txt");
         LeerClassroom(fichero);
+        eliminarRegistro();
     }
-
     /**
      * Esta funcion muestra los datos de las aulas
      *
@@ -91,6 +92,56 @@ public class ProjectoU1 {
             writer.close();
         } catch (Exception e) {
             System.out.println("Ha ocurrido un error al crear/escribir en el fichero");
+        }
+    }
+    /**
+     * Esta funcion Elimina un registro
+     */
+    private static void eliminarRegistro() {
+        Scanner lector = new Scanner(System.in);
+        File fichero = new File("C:/M03/prueba.txt");
+        //Le pedimos al usuario que ID quiere eliminar
+        //Creamos un variable en donde se guarda el ID que quiere eliminar el usuario 
+        String ID;
+        System.out.print("Introduce el ID la linea que quieres eliminar: ");
+        ID = lector.next().trim().toUpperCase();//Elimina toda la linea del ID introducido
+        
+        // Array para guardar todos los registros leídos del fichero
+        ArrayList<String> registros = new ArrayList<>();
+
+        // Abrimos el fichero de texto para leerlo en memoria
+        try {
+            Scanner lectorFichero = new Scanner(fichero);
+
+            while (lectorFichero.hasNext()) {
+                registros.add(lectorFichero.nextLine());
+            }
+
+            lectorFichero.close();
+        } catch (Exception e) {
+            System.out.println("Ha ocurrido un error al abrir/leer el fichero");
+        }
+
+        // Abrimos el fichero de texto para sobreescribirlo
+        // Eliminaremos el registro que quiera el usuario
+        // Despues cuando el usuario haya introducido el ID que quiere eliminar, la maquina nos dira si se ha eliminado bien o no 
+        try {
+            FileWriter writer = new FileWriter(fichero);
+            boolean idEliminado = false;
+            for (String registro : registros) {
+                if (!ID.equals(registro.substring(0, 3))) {
+                    writer.write(registro + "\n");
+                } else {
+                    idEliminado = true;
+                }
+            } if (idEliminado == true) {
+                System.out.println("El registro se ha eliminado");
+            } else {
+                System.out.println("ERROR. El ID no existe/no se ha encontrado");
+            }
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("Ha ocurrido un error al abrir/sobreescribir el fichero");
         }
     }
 }
