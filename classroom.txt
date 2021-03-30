@@ -8,5 +8,4 @@ M05,Aula30,20,Sí,22,Sí,Sí
 M06,Aula05,15,Sí,17,Sí,Sí
 M15,Aula30,20,Si,22,Si,No
 FOL,Aula25,25,No,Null,Sí,Sí
-EIE,Aula25,25,No,Null,Sí,Sí 
-M,Aula15,15,Si,20,Si,No
+EIE,Aula25,25,No,Null,Sí,Sí
