@@ -1,7 +1,7 @@
 M01,Aula24,25,Si,25,Sí,Sí
 M08,Aula11,25,Sí,25,Sí,No
 M09,Aula10,30,Sí,32,Sí,Sí
-M012,Aula26,25,Si,28,Sí,No
+M12,Aula26,25,Si,28,Sí,No
 M04,Aula30,25,Sí,27,Sí,No
 M10,Aula25,25,Sí,25,Sí,No
 M05,Aula30,20,Sí,22,Sí,Sí
