@@ -24,10 +24,10 @@ public class Sprint2Menu {
         //int menu servira para seleccionar una opcion
         //Creamos un menu dentro del bucle do-while para que el usuario decida
         //cuando dar fin a sus acciones
-        Scanner lector = new Scanner(System.in);      
+        Scanner lector = new Scanner(System.in);
         boolean salir = false;
         int menu;
-        do{
+        do {
             //Creamos un variable donde indicaremos el archivo a modificar
             File fichero = new File("Registros/classroom.txt");
             System.out.println("\n############ GESTION DE AULAS ############## \n");
@@ -38,12 +38,12 @@ public class Sprint2Menu {
             System.out.println("5)Salir");
             System.out.print("Seleccione una opcion: ");
             menu = lector.nextInt();
-            switch(menu){
+            switch (menu) {
                 case 1:
                     LeerClassroom(fichero);
                     break;
                 case 2:
-                    crearRegistrov2(fichero);
+                    crearRegistro(fichero);
                     break;
                 case 3:
                     EditarClassroom(fichero);
@@ -52,21 +52,22 @@ public class Sprint2Menu {
                     eliminarRegistro(fichero);
                     break;
                 case 5:
-                    salir=true;
+                    salir = true;
                     break;
                 default:
                     System.out.println("Vuelva a escribir una opcion valida.");
             }
-        }while(salir != true);
-    }  
-     /**
+        } while (salir != true);
+    }
+
+    /**
      * Funcion que permite leer el fichero
      *
      * @param fichero archivo classroom.txt donde se alnacenan los datos de las
      * aulas
      */
-        private static void LeerClassroom(File fichero) {
-            //numLineas sera necesario para contar los registros
+    private static void LeerClassroom(File fichero) {
+        //numLineas sera necesario para contar los registros
         int numLineas = 0;
         // Se intentara leer el archivo classroom.txt
         try {
@@ -86,7 +87,7 @@ public class Sprint2Menu {
                 System.out.println("Insonorizada: " + linea[6]);
                 System.out.println("");
             }
-            
+
             lectorFichero.close();
             //Se mostrara a partir del contador numLineas el numero de registros en classroom
             System.out.println("Hay " + numLineas + " registros de aulas");
@@ -96,16 +97,17 @@ public class Sprint2Menu {
 
         }
     }
+
     /**
      * Esta funcion se encarga de crear un nuevo registro de un aula
      *
      * @param fichero archivo classroom.txt donde se almacenan los datos de las
      * aulas
-     */    
-    private static void crearRegistrov2(File fichero) {
+     */
+    private static void crearRegistro(File fichero) {
         //registro guardara los nuevos registros creados dentro de la funcion crearNuevaLinea
-        String registroNuevo = crearNuevaLinea();
-        
+        String registroNuevo = crearNuevalinea()+"\n";
+
         try {
             //agregar una nueva linea al fichero(true para agregar una linea y no sobreescribirla)
             //Se escribira en el fichero el registro nuevo
@@ -113,17 +115,18 @@ public class Sprint2Menu {
             writer.write(registroNuevo);
             writer.close();
             System.out.println("El registro ha sido creado con exito");
-              //En caso de error se imprimira el siguiente mensaje
+            //En caso de error se imprimira el siguiente mensaje
         } catch (Exception e) {
             System.out.println("Ha ocurrido un error al crear/escribir en el fichero");
         }
     }
+
     /**
      * Esta funcion se encarga de editar un registro
      *
      * @param fichero archivo classroom.txt donde se almacenan los datos de las
      * aulas
-     */   
+     */
     private static void EditarClassroom(File fichero) {
         Scanner lector = new Scanner(System.in);
         String lineadeseada, lineanueva;
@@ -131,67 +134,68 @@ public class Sprint2Menu {
         // y que cualquier ID que escribas se convierta en mayusculas.
         System.out.print("Introduce la linea que quieres editar: ");
         lineadeseada = lector.next().trim();
-        lineadeseada = lineadeseada.toUpperCase().substring(0,1)+lineadeseada.substring(1);
+        lineadeseada = lineadeseada.toUpperCase().substring(0, 1) + lineadeseada.substring(1);
         // Array para guardar todas las líneas leídas del fichero
-        ArrayList<String> lineas = new ArrayList<>(); 
+        ArrayList<String> lineas = new ArrayList<>();
         // Abrimos el fichero de texto para leerlo en memoria
         try {
             //Se verificara la existencia del fichero classroom
             Scanner lectorFichero = new Scanner(fichero);
-            while(lectorFichero.hasNext()) {
+            while (lectorFichero.hasNext()) {
                 lineas.add(lectorFichero.nextLine());
             }
             lectorFichero.close();
-              //En caso de error se imprimira el siguiente mensaje
+            //En caso de error se imprimira el siguiente mensaje
         } catch (Exception e) {
             System.out.println("Ha ocurrido un error al abrir/leer el fichero");
         }
-        
+
         // Abrimos el fichero de texto para sobreescribirlo
         try {
             //Se comprovara que el ID coincida con el ID dentro del fichero
-            FileWriter writer = new FileWriter(fichero);      
+            FileWriter writer = new FileWriter(fichero);
             boolean prueba = false;
             for (String linea : lineas) {
                 //En caso de que se encuentre el ID escrito 
                 //Se ejecutara la funcion nuevaLinearegistro() con tal de
                 //reemplazar los registros de la fila donde se encuentra el ID
                 if (lineadeseada.equals(linea.substring(0, 3))) {
-                    String registroNuevo = nuevaLinearegistro();
-                    writer.write(registroNuevo+"\n");
+                    String registroNuevo = crearNuevalinea();
+                    writer.write(registroNuevo + "\n");
                     prueba = true;
-       
+
                 } else {
                     writer.write(linea + "\n");
                 }
             }
             //Dependiendo de que la modificacion haya tenido exito o no se 
             //mostrara un mensaje u otro mediante la variable prueba
-            if(prueba == true){
+            if (prueba == true) {
                 System.out.println("Se ha modificado");
-            }else{
+            } else {
                 System.out.println("No se ha modificado. Error ID");
             }
             writer.close();
-              //En caso de error se imprimira el siguiente mensaje
+            //En caso de error se imprimira el siguiente mensaje
         } catch (Exception e) {
             System.out.println("Ha ocurrido un error al abrir/sobreescribir el fichero");
         }
     }
+
     /**
      * Esta funcion se encarga de eliminar un registro
      *
      * @param fichero archivo classroom.txt donde se almacenan los datos de las
      * aulas
-     */   
-        private static void eliminarRegistro(File fichero) {
+     */
+    private static void eliminarRegistro(File fichero) {
         Scanner lector = new Scanner(System.in);
         //Le pedimos al usuario que ID quiere eliminar
         //Creamos un variable en donde se guarda el ID que quiere eliminar el usuario 
         String ID;
         System.out.print("Introduce el ID la linea que quieres eliminar: ");
         ID = lector.next().trim().toUpperCase();//Elimina toda la linea del ID introducido
-        
+
         // Array para guardar todos los registros leídos del fichero
         ArrayList<String> registros = new ArrayList<>();
 
@@ -220,7 +224,8 @@ public class Sprint2Menu {
                 } else {
                     idEliminado = true;
                 }
-            } if (idEliminado == true) {
+            }
+            if (idEliminado == true) {
                 System.out.println("El registro se ha eliminado");
             } else {
                 System.out.println("ERROR. El ID no existe/no se ha encontrado");
@@ -230,18 +235,20 @@ public class Sprint2Menu {
             System.out.println("Ha ocurrido un error al abrir/sobreescribir el fichero");
         }
     }
-     /**
-     * Esta funcion se encarga de pedir al usuario parametros sobre sobre el nuevo
-     * registro, en esta ocasion esta sera usada para reemplazar la vieja informacion
-     * de un registro por la nueva
+
+    /**
+     * Esta funcion se encarga de pedir al usuario parametros sobre sobre el
+     * nuevo registro, en esta ocasion esta sera usada para reemplazar la vieja
+     * informacion de un registro por la nueva
+     *
      * @return devuelve la linea creada
      */
-    
-     private static String crearNuevaLinea() {
+
+    private static String crearNuevalinea() {
         Scanner lector = new Scanner(System.in);
         String registroNuevo;
         String[] cambiar = new String[3];
-        System.out.println("Crear un nuevo registro");
+        System.out.println("Nuevo registro");
         System.out.print("ID: ");
         String id = lector.next().trim();
         System.out.print("Nombre de aula: ");
@@ -264,42 +271,7 @@ public class Sprint2Menu {
         id = id.substring(0, 1).toUpperCase() + id.substring(1);
         nombreAula = nombreAula.substring(0, 1).toUpperCase() + nombreAula.substring(1);
         //String donde se guarda la linea de datos en formato CSV
-        
-        registroNuevo =id + "," + nombreAula + "," + cantidadAlumnos + "," + cambiar[0] + "," + cantidadPc + "," + cambiar[1] + "," + cambiar[2]+ "\n";
-        return registroNuevo;
-    }
-     /**
-     * Esta funcion se encarga de pedir al usuario parametros para una nueva
-     * linea de datos de aula
-     * @return devuelve la linea creada
-     */
-     private static String nuevaLinearegistro() {
-        Scanner lector = new Scanner(System.in);
-        String registroNuevo;
-        String[] cambiar = new String[3];
-        System.out.println("Añadir informacion");
-        System.out.print("ID: ");
-        String id = lector.next().trim();
-        System.out.print("Nombre de aula: ");
-        String nombreAula = lector.next().trim();
-        lector.nextLine();
-        System.out.print("Capacidad de alumnos: ");
-        String cantidadAlumnos = lector.next().trim();
-        System.out.print("Hay pc's(Si/No): ");
-        cambiar[0] = lector.next().trim();
-        System.out.print("Cantidad de pc's disponibles: ");
-        String cantidadPc = lector.next().trim();
-        System.out.print("Hay proyector(Si/No): ");
-        cambiar[1] = lector.next().trim();
-        System.out.print("El aula esta insonorizada(Si/No): ");
-        cambiar[2] = lector.next().trim();
-        //Poner las primeras letras en mayuscula
-        for (int i = 0; i < cambiar.length; i++) {
-            cambiar[i] = cambiar[i].substring(0, 1).toUpperCase() + cambiar[i].charAt(1);
-        }
-        id = id.substring(0, 1).toUpperCase() + id.substring(1);
-        nombreAula = nombreAula.substring(0, 1).toUpperCase() + nombreAula.substring(1);
-        //String donde se guarda la linea de datos en formato CSV
+
         registroNuevo = id + "," + nombreAula + "," + cantidadAlumnos + "," + cambiar[0] + "," + cantidadPc + "," + cambiar[1] + "," + cambiar[2];
         return registroNuevo;
     }

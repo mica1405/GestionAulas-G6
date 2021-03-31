@@ -1,4 +1,3 @@
-M01,Aula24,25,Si,25,Sí,Sí
 M08,Aula11,25,Sí,25,Sí,No
 M09,Aula10,30,Sí,32,Sí,Sí
 M12,Aula26,25,Si,28,Sí,No
@@ -6,6 +5,5 @@ M04,Aula30,25,Sí,27,Sí,No
 M10,Aula25,25,Sí,25,Sí,No
 M05,Aula30,20,Sí,22,Sí,Sí
 M06,Aula05,15,Sí,17,Sí,Sí
-M15,Aula30,20,Si,22,Si,No
 FOL,Aula25,25,No,Null,Sí,Sí
 EIE,Aula25,25,No,Null,Sí,Sí
