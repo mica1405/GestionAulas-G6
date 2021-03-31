@@ -22,14 +22,13 @@ public class ProjectoU1 {
     public static void main(String[] args) {
         //Creamos un variable donde indicaremos el archivo a modificar
         File fichero = new File("/GestionAulas-G6/classroom.txt");
-<<<<<<< HEAD
-        LeerClassroom(fichero);
+
+        leerClassroom(fichero);
         eliminarRegistro();
-=======
+
         leerClassroom(fichero);
         crearRegistro(fichero);
-        
->>>>>>> master
+
     }
     /**
      * Funcion que permite leer el fichero
