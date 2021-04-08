@@ -20,14 +20,21 @@ import java.util.Scanner;
  */
 public class Sprint3Projecto {
 
+    static Usuario[] usuario;
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       File fichero = new File("/home/mati/Documentos/Registros/classroom.txt");
+        File fichero = new File("Registros/classroom.txt");
+        /*boolean fin = false;
+        while(fin != true){
+            if(usuario != null)
+        }*/
         usuarios();
+        mostrarUsuario();
+        //menuProfesor(fichero);
         ingresarUsuario(fichero);
-
     }
 
     private static void ingresarUsuario(File fichero) {
@@ -43,7 +50,8 @@ public class Sprint3Projecto {
                 if (user != null) {
                     if (usuario.equals(user.usuario) && contraseña.equals(user.contraseña)) {
                         if (user.rol.equals("Administrador")) {
-
+                            menuAdministrador();
+                            mostrarUsuario();
                         } else if (user.rol.equals("Profesor")) {
                             System.out.println("\n Bienvenido profesor " + user.nombre);
                             menuProfesor(fichero);
@@ -53,14 +61,15 @@ public class Sprint3Projecto {
             }
         } catch (Exception e) {
             System.out.println("Error al abrir o leer el fichero");
+            e.printStackTrace();
         }
+
     }
 
     private static void usuarios() {
         try {
             ObjectOutputStream fichero = new ObjectOutputStream(new FileOutputStream("usuarios.dat"));
-
-            Usuario[] usuario = new Usuario[100];
+            usuario = new Usuario[100];
             usuario[0] = new Usuario();
             usuario[0].rol = "Administrador";
             usuario[0].nombre = "Jose Andres";
@@ -79,10 +88,13 @@ public class Sprint3Projecto {
             System.out.println("Error al abrir o leer el fichero");
 
         }
+    }
+
+    private static void mostrarUsuario() {
 
         try {
             ObjectInputStream fichero = new ObjectInputStream(new FileInputStream("usuarios.dat"));
-            Usuario[] usuario = (Usuario[]) fichero.readObject();
+            usuario = (Usuario[]) fichero.readObject();
             for (Usuario user : usuario) {
                 if (user != null) {
                     System.out.println("Rol: " + user.rol);
@@ -93,6 +105,7 @@ public class Sprint3Projecto {
             }
         } catch (Exception e) {
             System.out.println("Error al abrir o leer el fichero");
+            e.printStackTrace();
         }
     }
 
@@ -350,5 +363,63 @@ public class Sprint3Projecto {
 
         registroNuevo = id + "," + nombreAula + "," + cantidadAlumnos + "," + cambiar[0] + "," + cantidadPc + "," + cambiar[1] + "," + cambiar[2];
         return registroNuevo;
+    }
+
+    private static void menuAdministrador() {
+        Scanner lector = new Scanner(System.in);
+        boolean salir = false;
+        int menu;
+        do {
+            //Creamos un variable donde indicaremos el archivo a modificar
+
+            System.out.println("############ GESTION DE USUARIOS ############## \n");
+            System.out.println("1)Crear usuario");
+            System.out.println("2)Salir");
+            System.out.print("Seleccione una opcion: ");
+            menu = lector.nextInt();
+            switch (menu) {
+                case 1:
+                    crearUsuario();
+                    break;
+                case 2:
+                    salir = true;
+                    break;
+                default:
+                    System.out.println("Vuelva a escribir una opcion valida.");
+            }
+        } while (salir != true);
+    }
+
+    private static void crearUsuario() {
+        Scanner lector = new Scanner(System.in);
+        System.out.print("Rol del usuario: ");
+        String rol = lector.nextLine();
+        System.out.print("Nombre real: ");
+        String nombre = lector.nextLine();
+        System.out.print("Nombre de usuario: ");
+        String nameuser = lector.nextLine();
+        System.out.print("Contraseña: ");
+        String password = lector.nextLine();
+        boolean fin = false;
+        int cont = 0;
+        try {
+            ObjectOutputStream fichero = new ObjectOutputStream(new FileOutputStream("usuarios.dat"));
+            while (fin != true) {
+                cont++;              
+                if (usuario[cont] == null) {
+                usuario[cont] = new Usuario();
+                usuario[cont].rol = rol;
+                usuario[cont].nombre = nombre;
+                usuario[cont].usuario = nameuser;
+                usuario[cont].contraseña = password;
+                    fin = true;
+                }
+
+            }
+            fichero.close();
+        } catch (Exception e) {
+            System.out.println("Error al abrir o leer el fichero");
+            e.printStackTrace();
+        }
     }
 }
