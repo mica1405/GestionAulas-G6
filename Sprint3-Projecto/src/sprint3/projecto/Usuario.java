@@ -5,10 +5,15 @@
  */
 package sprint3.projecto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author mati
  */
-public class Usuario {
-    
+public class Usuario implements Serializable{
+    public String nombre;
+    public String usuario;
+    public String rol;
+    public String contraseña;
 }
