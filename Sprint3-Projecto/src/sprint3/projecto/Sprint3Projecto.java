@@ -74,7 +74,6 @@ public class Sprint3Projecto {
 
     private static void usuarios() {
         try {
-            ObjectOutputStream fichero = new ObjectOutputStream(new FileOutputStream("usuarios.dat"));
             usuario = new Usuario[100];
             usuario[0] = new Usuario();
             usuario[0].rol = "Administrador";
@@ -82,13 +81,6 @@ public class Sprint3Projecto {
             usuario[0].usuario = "joan00";
             usuario[0].contraseña = "joselito";
             System.out.println("-----------------");
-            usuario[1] = new Usuario();
-            usuario[1].rol = "Profesor";
-            usuario[1].nombre = "Pedro Duran";
-            usuario[1].usuario = "pedu";
-            usuario[1].contraseña = "pedrito";
-            fichero.writeObject(usuario);
-            fichero.close();
         } catch (Exception e) {
             System.out.println("Error al abrir o leer el fichero");
 
@@ -178,7 +170,6 @@ public class Sprint3Projecto {
                 System.out.println("Insonorizada: " + linea[6]);
                 System.out.println("");
             }
-
             lectorFichero.close();
             //Se mostrara a partir del contador numLineas el numero de registros en classroom
             System.out.println("Hay " + numLineas + " registros de aulas");
@@ -198,7 +189,6 @@ public class Sprint3Projecto {
     private static void crearRegistro(File fichero) {
         //registro guardara los nuevos registros creados dentro de la funcion crearNuevaLinea
         String registroNuevo = crearNuevalinea() + "\n";
-
         try {
             //agregar una nueva linea al fichero(true para agregar una linea y no sobreescribirla)
             //Se escribira en el fichero el registro nuevo
@@ -211,7 +201,6 @@ public class Sprint3Projecto {
             System.out.println("Ha ocurrido un error al crear/escribir en el fichero");
         }
     }
-
     /**
      * Esta funcion se encarga de editar un registro
      *
@@ -240,7 +229,6 @@ public class Sprint3Projecto {
         } catch (Exception e) {
             System.out.println("Ha ocurrido un error al abrir/leer el fichero");
         }
-
         // Abrimos el fichero de texto para sobreescribirlo
         try {
             //Se comprovara que el ID coincida con el ID dentro del fichero
@@ -254,7 +242,6 @@ public class Sprint3Projecto {
                     String registroNuevo = crearNuevalinea();
                     writer.write(registroNuevo + "\n");
                     prueba = true;
-
                 } else {
                     writer.write(linea + "\n");
                 }
@@ -272,7 +259,6 @@ public class Sprint3Projecto {
             System.out.println("Ha ocurrido un error al abrir/sobreescribir el fichero");
         }
     }
-
     /**
      * Esta funcion se encarga de eliminar un registro
      *
@@ -286,18 +272,14 @@ public class Sprint3Projecto {
         String ID;
         System.out.print("Introduce el ID la linea que quieres eliminar: ");
         ID = lector.next().trim().toUpperCase();//Elimina toda la linea del ID introducido
-
         // Array para guardar todos los registros leídos del fichero
         ArrayList<String> registros = new ArrayList<>();
-
         // Abrimos el fichero de texto para leerlo en memoria
         try {
             Scanner lectorFichero = new Scanner(fichero);
-
             while (lectorFichero.hasNext()) {
                 registros.add(lectorFichero.nextLine());
             }
-
             lectorFichero.close();
         } catch (Exception e) {
             System.out.println("Ha ocurrido un error al abrir/leer el fichero");
@@ -326,7 +308,6 @@ public class Sprint3Projecto {
             System.out.println("Ha ocurrido un error al abrir/sobreescribir el fichero");
         }
     }
-
     /**
      * Esta funcion se encarga de pedir al usuario parametros sobre sobre el
      * nuevo registro, en esta ocasion esta sera usada para reemplazar la vieja
