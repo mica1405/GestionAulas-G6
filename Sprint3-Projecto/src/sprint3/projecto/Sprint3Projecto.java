@@ -28,128 +28,25 @@ public class Sprint3Projecto {
     public static void main(String[] args) {
         File fichero = new File("Registros/classroom.txt");
         usuarios();
-        int posicion = menuInicio();
-        ingresarUsuario(fichero, posicion);
-    }
-/**
- *Esta funcion se encargara de solicitar el nombre de usuario 
- * y contraseña, dependiendo del rol del usuario
- * se mostrará un menu u otro
- */
-
-    private static void ingresarUsuario(File fichero, int posicion) {
-        boolean fin = false;
-        try {
-            while (fin != true) {
-                if (usuario[posicion].rol.equals("Administrador")) {
-                    menuAdministrador(posicion);
-                    fin = true;
-                } else if (usuario[posicion].rol.equals("Profesor")) {
-                    menuProfesor(fichero, posicion);
-                    fin = true;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error al abrir o leer el fichero");
-        }
-    }
-    private static int menuInicio() {
-        Scanner lector = new Scanner(System.in);
-        System.out.print("Ingrese el usuario: ");
-        String usuarioIngresado = lector.nextLine();
-        System.out.print("Ingrese la contraseña: ");
-        String contraseña = lector.next();
-        int posicion = -1;
-        boolean fin = false;
-        try {
-            for (int i = 0; fin != true || i > usuario.length ; i++) {
-                if (usuario != null) {
-                    if (usuarioIngresado.equals(usuario[i].usuario) && contraseña.equals(usuario[i].contraseña)) {
-                        System.out.println("El usuario y la contraseña son correctos");
-                        fin = true;
-                    }
-                    posicion++;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error al abrir o leer el fichero");
-        }
-        return posicion;
-    }
-/**
- * Estos seran los usuario disponibles de fabrica
- */
-    private static void usuarios() {
-        try {
-            usuario = new Usuario[100];
-            usuario[0] = new Usuario();
-            usuario[0].rol = "Administrador";
-            usuario[0].nombre = "Jose Andres";
-            usuario[0].usuario = "joan00";
-            usuario[0].contraseña = "joselito";
-            System.out.println("-----------------");
-        } catch (Exception e) {
-            System.out.println("Error al abrir o leer el fichero");
-
-        }
-    }
-    private static void mostrarUsuario() {
-        try {
-            for (Usuario user : usuario) {
-                if (user != null) {
-                    System.out.println("Rol: " + user.rol);
-                    System.out.println("Nombre: " + user.nombre);
-                    System.out.println("Usuario: " + user.usuario);
-                    System.out.println("------------------------------");
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error al abrir o leer el fichero");
-            e.printStackTrace();
+        int []posicion = menuInicio();
+        if(posicion[1] == 0){
+            System.out.println("Usuario o contraseña introducidos erroneos");
+            posicion = menuInicio();
+            ingresarUsuario(fichero, posicion[0]);
+        }else{
+            System.out.println("Usuario y contraseña correctos");
+        ingresarUsuario(fichero, posicion[0]);
         }
     }
 
-    private static void menuProfesor(File fichero, int pos) {
-        //boolean servira para dar final al bucle del menu
-        //int menu servira para seleccionar una opcion
-        //Creamos un menu dentro del bucle do-while para que el usuario profesor decida
-        //cuando dar fin a sus acciones
-        Scanner lector = new Scanner(System.in);
-        boolean salir = false;
-        int menu;
-        do {
-            //Creamos un variable donde indicaremos el archivo a modificar
-            System.out.println("Bienvenido "+usuario[pos].rol);
-            System.out.println("############ GESTION DE AULAS ##############");
-            System.out.println("1)Ver los registros");
-            System.out.println("2)Crear un registro");
-            System.out.println("3)Editar registro");
-            System.out.println("4)Eliminar registro");
-            System.out.println("5)Salir");
-            System.out.print("Seleccione una opcion: ");
-            menu = lector.nextInt();
-            switch (menu) {
-                case 1:
-                    LeerClassroom(fichero);
-                    break;
-                case 2:
-                    crearRegistro(fichero);
-                    break;
-                case 3:
-                    EditarClassroom(fichero);
-                    break;
-                case 4:
-                    eliminarRegistro(fichero);
-                    break;
-                case 5:
-                    salir = true;
-                    break;
-                default:
-                    System.out.println("Vuelva a escribir una opcion valida.");
-            }
-        } while (salir != true);
-    }
-
+    /**
+     * Esta funcion se encarga de comparar si el usuario es un admin o un
+     * profesor y mostar el menu correspondiente
+     *
+     * @param fichero datos del documento classroom.txt
+     * @param posicion posicion en la que se encuentra el usuario en el array
+     */
+    //--------------------------------------SPRINT 1---------------------------------------------------
     /**
      * Funcion que permite leer el fichero
      *
@@ -187,6 +84,49 @@ public class Sprint3Projecto {
         }
     }
 
+    //--------------------------------------SPRINT 2---------------------------------------------------
+    /**
+     * Esta funcion muestra al usuario el menu para profesores
+     *
+     * @param fichero documento classroom.txt
+     * @param pos posicion del usuario en el array
+     */
+    private static void menuProfesor(File fichero, int pos) {
+        Scanner lector = new Scanner(System.in);
+        boolean salir = false;
+        int menu;
+        do {
+            System.out.println("Bienvenido " + usuario[pos].rol);
+            System.out.println("############ GESTION DE AULAS ##############");
+            System.out.println("1)Ver los registros");
+            System.out.println("2)Crear un registro");
+            System.out.println("3)Editar registro");
+            System.out.println("4)Eliminar registro");
+            System.out.println("5)Salir");
+            System.out.print("Seleccione una opcion: ");
+            menu = lector.nextInt();
+            switch (menu) {
+                case 1:
+                    LeerClassroom(fichero);
+                    break;
+                case 2:
+                    crearRegistro(fichero);
+                    break;
+                case 3:
+                    EditarClassroom(fichero);
+                    break;
+                case 4:
+                    eliminarRegistro(fichero);
+                    break;
+                case 5:
+                    salir = true;
+                    break;
+                default:
+                    System.out.println("Vuelva a escribir una opcion valida.");
+            }
+        } while (salir != true);
+    }
+
     /**
      * Esta funcion se encarga de crear un nuevo registro de un aula
      *
@@ -208,6 +148,7 @@ public class Sprint3Projecto {
             System.out.println("Ha ocurrido un error al crear/escribir en el fichero");
         }
     }
+
     /**
      * Esta funcion se encarga de editar un registro
      *
@@ -266,6 +207,7 @@ public class Sprint3Projecto {
             System.out.println("Ha ocurrido un error al abrir/sobreescribir el fichero");
         }
     }
+
     /**
      * Esta funcion se encarga de eliminar un registro
      *
@@ -315,6 +257,7 @@ public class Sprint3Projecto {
             System.out.println("Ha ocurrido un error al abrir/sobreescribir el fichero");
         }
     }
+
     /**
      * Esta funcion se encarga de pedir al usuario parametros sobre sobre el
      * nuevo registro, en esta ocasion esta sera usada para reemplazar la vieja
@@ -353,10 +296,60 @@ public class Sprint3Projecto {
         registroNuevo = id + "," + nombreAula + "," + cantidadAlumnos + "," + cambiar[0] + "," + cantidadPc + "," + cambiar[1] + "," + cambiar[2];
         return registroNuevo;
     }
+
+    //--------------------------------------SPRINT 3---------------------------------------------------
+    private static void ingresarUsuario(File fichero, int posicion) {
+        //variable para finalizar bucle
+        boolean fin = false;
+        try {
+            while (fin != true) {
+                //comparar el usuario con las dos opciones dependiando cual sea mostrara un menu distinto
+                if (usuario[posicion].rol.equals("Administrador")) {
+                    menuAdministrador(posicion);
+                    fin = true;
+                } else if (usuario[posicion].rol.equals("Profesor")) {
+                    menuProfesor(fichero, posicion);
+                    fin = true;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al abrir o leer el fichero");
+        }
+    }
+
     /**
-     *Esta funcion es el menu que se le cederá al administrador
-     * Que tendra como funciones
-     * añadir, modificar, eliminar y lista usuarios.
+     * Esta funcion se encarga de prefuntar al usuario su usuario y contraseña
+     *
+     * @return devolvera la posicion del usuario en el array
+     */
+    private static int[] menuInicio() {        
+        Scanner lector = new Scanner(System.in);
+        System.out.print("Ingrese el usuario: ");
+        String usuarioIngresado = lector.nextLine().trim();
+        System.out.print("Ingrese la contraseña: ");
+        String contraseña = lector.next().trim();
+        int []posicion = new int[2];
+        //finalizar bucle
+        boolean fin = false;
+        try {                   
+            //bucle para recorrer el array se detendra cuando ingrese en if o cuando se recorra todo el array
+            for (int i = 0; fin != true || i < usuario.length; i++) {
+                    if (usuarioIngresado.equals(usuario[i].usuario) && contraseña.equals(usuario[i].contraseña)) {
+                        posicion[0] = i;
+                        posicion[1] = 1;
+                        fin = true;                                    
+                }
+            }        
+        } catch (Exception e) {
+            System.out.println("Error al abrir o leer el fichero");
+        }
+        return posicion;
+    }
+
+    /**
+     * Esta funcion es el menu que se le cederá al administrador Que tendra como
+     * funciones añadir, modificar, eliminar y lista usuarios.
+     *
      * @return devuelve la linea creada
      */
     private static void menuAdministrador(int pos) {
@@ -364,7 +357,7 @@ public class Sprint3Projecto {
         boolean salir = false;
         int menu;
         do {
-            System.out.println("Bienvenido "+usuario[pos].nombre);
+            System.out.println("Bienvenido " + usuario[pos].nombre);
             System.out.println("############ GESTION DE USUARIOS ##############");
             System.out.println("1)Crear usuario");
             System.out.println("2)Listar usuarios");
@@ -386,25 +379,78 @@ public class Sprint3Projecto {
             }
         } while (salir != true);
     }
-   /**
-     *Esta funcion servira para crear el usuario
-     * junto a su contraseña, usuario, nombre real y rol.
-     * 
+
+    /**
+     * Esta funcion crea el unico usuario admin
+     */
+    private static void usuarios() {
+        try {
+            usuario = new Usuario[100];
+            usuario[0] = new Usuario();
+            usuario[0].rol = "Administrador";
+            usuario[0].nombre = "Jose Andres";
+            usuario[0].usuario = "joan00";
+            usuario[0].contraseña = "1234";
+            usuario[1] = new Usuario();
+            usuario[1].rol = "Administrador";
+            usuario[1].nombre = "Matias";
+            usuario[1].usuario = "mat01";
+            usuario[1].contraseña = "12345";
+        } catch (Exception e) {
+            System.out.println("Error al abrir o leer el fichero");
+        }
+    }
+
+    /**
+     * Esta funcion lista todos los usuarios
+     */
+    private static void mostrarUsuario() {
+        try {
+            System.out.println("------------------------------");
+            for (Usuario user : usuario) {
+                if (user != null) {
+                    System.out.println("Rol: " + user.rol);
+                    System.out.println("Nombre: " + user.nombre);
+                    System.out.println("Usuario: " + user.usuario);
+                    System.out.println("------------------------------");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al abrir o leer el fichero");
+        }
+    }
+
+    /**
+     * Esta funcion servira para crear el usuario junto a su contraseña,
+     * usuario, nombre real y rol.
+     *
      * @return devuelve la linea creada
      */
     private static void crearUsuario() {
-        Scanner lector = new Scanner(System.in);
-        System.out.print("Rol del usuario: ");
-        String rol = lector.nextLine();
-        System.out.print("Nombre real: ");
-        String nombre = lector.nextLine();
-        System.out.print("Nombre de usuario: ");
-        String nameuser = lector.nextLine();
-        System.out.print("Contraseña: ");
-        String password = lector.nextLine();
+        boolean comprobar = false;
+        String rol = "null", nombre ="null", nameuser="null", password="null";
+        while (comprobar != true) {
+            Scanner lector = new Scanner(System.in);
+            System.out.print("Rol del usuario(Administrador/Profesor): ");
+            rol = lector.nextLine().toLowerCase();
+            System.out.print("Nombre y Apellido: ");
+            nombre = lector.nextLine().toLowerCase();
+            System.out.print("Nombre de usuario: ");
+            nameuser = lector.nextLine().trim();
+            System.out.print("Contraseña: ");
+            password = lector.nextLine().trim();
+            //correccion de letras
+            rol = rol.substring(0, 1).toUpperCase() + rol.substring(1);
+            nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1,nombre.indexOf(" ")) + nombre.substring(nombre.indexOf(" "), nombre.indexOf(" ") + 2).toUpperCase() + nombre.substring(nombre.indexOf(" ") + 2);
+            if (rol.equals("Administrador") || rol.equals("Profesor")) {
+                comprobar = true;
+            } else {
+                System.out.println("El rol introduciso no es valido, vuelve a intentarlo");
+            }
+        }
         boolean fin = false;
         int cont = 0;
-        try {           
+        try {
             while (fin != true) {
                 cont++;
                 if (usuario[cont] == null) {
@@ -413,9 +459,10 @@ public class Sprint3Projecto {
                     usuario[cont].nombre = nombre;
                     usuario[cont].usuario = nameuser;
                     usuario[cont].contraseña = password;
-                    fin = true;
+                    fin = true;                   
+                    System.out.println("Usuario creado");
                 }
-            }
+            }           
         } catch (Exception e) {
             System.out.println("Error al abrir o leer el fichero");
         }
