@@ -36,7 +36,11 @@ public class Sprint3Projecto {
         //menuProfesor(fichero);
         ingresarUsuario(fichero);
     }
-
+/**
+ *Esta funcion se encargara de solicitar el nombre de usuario 
+ * y contraseña, dependiendo del rol del usuario
+ * se mostrará un menu u otro
+ */
     private static void ingresarUsuario(File fichero) {
         Scanner lector = new Scanner(System.in);
         System.out.print("Ingrese el usuario: ");
@@ -48,6 +52,9 @@ public class Sprint3Projecto {
             Usuario[] usuarios = (Usuario[]) archivo.readObject();
             for (Usuario user : usuarios) {
                 if (user != null) {
+                    //Segun el tipo de usuario se le redigira a un menu u otro
+                    //En caso de Administrador se redigira la funcion menuAdministrador
+                    //En caso contrario a menuProfesor
                     if (usuario.equals(user.usuario) && contraseña.equals(user.contraseña)) {
                         if (user.rol.equals("Administrador")) {
                             menuAdministrador();
@@ -65,7 +72,9 @@ public class Sprint3Projecto {
         }
 
     }
-
+/**
+ * Estos seran los usuario disponibles de fabrica
+ */
     private static void usuarios() {
         try {
             ObjectOutputStream fichero = new ObjectOutputStream(new FileOutputStream("usuarios.dat"));
@@ -112,14 +121,13 @@ public class Sprint3Projecto {
     private static void menuProfesor(File fichero) {
         //boolean servira para dar final al bucle del menu
         //int menu servira para seleccionar una opcion
-        //Creamos un menu dentro del bucle do-while para que el usuario decida
+        //Creamos un menu dentro del bucle do-while para que el usuario profesor decida
         //cuando dar fin a sus acciones
         Scanner lector = new Scanner(System.in);
         boolean salir = false;
         int menu;
         do {
             //Creamos un variable donde indicaremos el archivo a modificar
-
             System.out.println("############ GESTION DE AULAS ############## \n");
             System.out.println("1)Ver los registros");
             System.out.println("2)Crear un registro");
@@ -292,7 +300,6 @@ public class Sprint3Projecto {
         // Abrimos el fichero de texto para leerlo en memoria
         try {
             Scanner lectorFichero = new Scanner(fichero);
-
             while (lectorFichero.hasNext()) {
                 registros.add(lectorFichero.nextLine());
             }
@@ -364,14 +371,19 @@ public class Sprint3Projecto {
         registroNuevo = id + "," + nombreAula + "," + cantidadAlumnos + "," + cambiar[0] + "," + cantidadPc + "," + cambiar[1] + "," + cambiar[2];
         return registroNuevo;
     }
-
+    /**
+     *Esta funcion es el menu que se le cederá al administrador
+     * Que tendra como funciones
+     * añadir, modificar, eliminar y lista usuarios.
+     * @return devuelve la linea creada
+     */
     private static void menuAdministrador() {
         Scanner lector = new Scanner(System.in);
         boolean salir = false;
         int menu;
         do {
             //Creamos un variable donde indicaremos el archivo a modificar
-
+            
             System.out.println("############ GESTION DE USUARIOS ############## \n");
             System.out.println("1)Crear usuario");
             System.out.println("2)Salir");
@@ -389,7 +401,12 @@ public class Sprint3Projecto {
             }
         } while (salir != true);
     }
-
+   /**
+     *Esta funcion servira para crear el usuario
+     * junto a su contraseña, usuario, nombre real y rol.
+     * 
+     * @return devuelve la linea creada
+     */
     private static void crearUsuario() {
         Scanner lector = new Scanner(System.in);
         System.out.print("Rol del usuario: ");
