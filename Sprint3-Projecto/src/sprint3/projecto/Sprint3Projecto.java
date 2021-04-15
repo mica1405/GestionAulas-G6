@@ -102,7 +102,8 @@ public class Sprint3Projecto {
             System.out.println("2)Crear un registro");
             System.out.println("3)Editar registro");
             System.out.println("4)Eliminar registro");
-            System.out.println("5)Salir");
+            System.out.println("5)Cerrar sesión");
+            System.out.println("6)Salir");
             System.out.print("Seleccione una opcion: ");
             menu = lector.nextInt();
             switch (menu) {
@@ -119,6 +120,8 @@ public class Sprint3Projecto {
                     eliminarRegistro(fichero);
                     break;
                 case 5:
+                    menuInicio();
+                case 6:
                     salir = true;
                     break;
                 default:
@@ -361,7 +364,10 @@ public class Sprint3Projecto {
             System.out.println("############ GESTION DE USUARIOS ##############");
             System.out.println("1)Crear usuario");
             System.out.println("2)Listar usuarios");
-            System.out.println("3)Salir");
+            System.out.println("3)Modificar usuario");
+            System.out.println("4)Eliminar usuario");
+            System.out.println("5)Cerrar sesión");
+            System.out.println("6)Apagar");
             System.out.print("Seleccione una opcion: ");
             menu = lector.nextInt();
             switch (menu) {
@@ -372,6 +378,14 @@ public class Sprint3Projecto {
                     mostrarUsuario();
                     break;
                 case 3:
+                    
+                case 4:
+                    
+                    break;
+                case 5:
+                    menuInicio();
+                    break;
+                case 6:
                     salir = true;
                     break;
                 default:
