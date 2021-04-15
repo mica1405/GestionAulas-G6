@@ -88,7 +88,7 @@ public class Sprint3Projecto {
                 System.out.println("Error al abrir o leer el fichero");
             }
         do {
-            System.out.println("Bienvenido " + usuario[pos].rol);
+            System.out.println("\nBienvenido " + usuario[pos].rol);
             System.out.println("############ GESTION DE AULAS ##############");
             System.out.println("1)Ver los registros");
             System.out.println("2)Crear un registro");
@@ -375,7 +375,7 @@ public class Sprint3Projecto {
                 System.out.println("Error al abrir o leer el fichero");
             }
         do {           
-            System.out.println("Bienvenido " + usuario[pos].nombre);
+            System.out.println("\nBienvenido " + usuario[pos].nombre);
             System.out.println("############ GESTION DE USUARIOS ##############");
             System.out.println("1)Crear usuario");
             System.out.println("2)Listar usuarios");
@@ -448,17 +448,20 @@ public class Sprint3Projecto {
         } catch (Exception e) {
             System.out.println("Error al abrir o leer el fichero");
         }
-        System.out.println("------------------------------");
-        for (Usuario user : usuario) {
-            if (user != null) {
-                System.out.println("Rol: " + user.rol);
-                System.out.println("Nombre: " + user.nombre);
-                System.out.println("Usuario: " + user.usuario);
-                System.out.println("------------------------------");
+        int contuser=0;
+        
+        System.out.println("------------------------------------------------------------");
+            for (Usuario user : usuario) {
+                if (user != null) {
+                    contuser++;
+                    System.out.print(contuser+")Rol: " + user.rol+" | ");
+                    System.out.print("Nombre: " + user.nombre+" | ");
+                    System.out.println("Usuario: " + user.usuario);
+            System.out.println("------------------------------------------------------------");   
+                }
             }
-        }
+            System.out.println("El numero total de usuarios guardados es de "+contuser+".\n");
     }
-
     /**
      * Esta funcion servira para crear el usuario junto a su contraseña,
      * usuario, nombre real y rol.
