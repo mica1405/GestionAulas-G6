@@ -80,13 +80,13 @@ public class Sprint3Projecto {
         boolean salir = false;
         int menu;
         Usuario[] usuario = null;
-            try {
-                ObjectInputStream archivo = new ObjectInputStream(new FileInputStream("usuarios.dat"));
-                usuario = (Usuario[]) archivo.readObject();
-                archivo.close();
-            } catch (Exception e) {
-                System.out.println("Error al abrir o leer el fichero");
-            }
+        try {
+            ObjectInputStream archivo = new ObjectInputStream(new FileInputStream("usuarios.dat"));
+            usuario = (Usuario[]) archivo.readObject();
+            archivo.close();
+        } catch (Exception e) {
+            System.out.println("Error al abrir o leer el fichero");
+        }
         do {
             System.out.println("\nBienvenido " + usuario[pos].rol);
             System.out.println("############ GESTION DE AULAS ##############");
@@ -367,14 +367,14 @@ public class Sprint3Projecto {
         boolean salir = false;
         int menu;
         Usuario[] usuario = null;
-            try {
-                ObjectInputStream archivo = new ObjectInputStream(new FileInputStream("usuarios.dat"));
-                usuario = (Usuario[]) archivo.readObject();
-                archivo.close();
-            } catch (Exception e) {
-                System.out.println("Error al abrir o leer el fichero");
-            }
-        do {           
+        try {
+            ObjectInputStream archivo = new ObjectInputStream(new FileInputStream("usuarios.dat"));
+            usuario = (Usuario[]) archivo.readObject();
+            archivo.close();
+        } catch (Exception e) {
+            System.out.println("Error al abrir o leer el fichero");
+        }
+        do {
             System.out.println("\nBienvenido " + usuario[pos].nombre);
             System.out.println("############ GESTION DE USUARIOS ##############");
             System.out.println("1)Crear usuario");
@@ -448,20 +448,21 @@ public class Sprint3Projecto {
         } catch (Exception e) {
             System.out.println("Error al abrir o leer el fichero");
         }
-        int contuser=0;
-        
+        int contuser = 0;
+
         System.out.println("------------------------------------------------------------");
-            for (Usuario user : usuario) {
-                if (user != null) {
-                    contuser++;
-                    System.out.print(contuser+")Rol: " + user.rol+" | ");
-                    System.out.print("Nombre: " + user.nombre+" | ");
-                    System.out.println("Usuario: " + user.usuario);
-            System.out.println("------------------------------------------------------------");   
-                }
+        for (Usuario user : usuario) {
+            if (user != null) {
+                contuser++;
+                System.out.print(contuser + ")Rol: " + user.rol + " | ");
+                System.out.print("Nombre: " + user.nombre + " | ");
+                System.out.println("Usuario: " + user.usuario);
+                System.out.println("------------------------------------------------------------");
             }
-            System.out.println("El numero total de usuarios guardados es de "+contuser+".\n");
+        }
+        System.out.println("El numero total de usuarios guardados es de " + contuser + ".\n");
     }
+
     /**
      * Esta funcion servira para crear el usuario junto a su contraseña,
      * usuario, nombre real y rol.
@@ -529,7 +530,40 @@ public class Sprint3Projecto {
     }
 
     //--------------------------------------SPRINT 4---------------------------------------------------
+    //--------------------------------------SPRINT 4---------------------------------------------------
     private static void editarUsuario() {
-
+        Scanner lector = new Scanner(System.in);
+        Usuario[] usuario = null;
+        boolean fin = false;
+        try {
+            ObjectInputStream fichero = new ObjectInputStream(new FileInputStream("usuarios.dat"));
+            usuario = (Usuario[]) fichero.readObject();
+            fichero.close();
+        } catch (Exception e) {
+            System.out.println("Error al abrir o leer el fichero");
+        }
+        System.out.print("Nombre del Usuario que desea editar: ");
+        String editar = lector.nextLine();
+        editar = editar.substring(0, 1).toUpperCase() + editar.substring(1, editar.indexOf(" ")) + editar.substring(editar.indexOf(" "), editar.indexOf(" ") + 2).toUpperCase() + editar.substring(editar.indexOf(" ") + 2);
+        String[] nuevoUsuario = nuevoUsuario();
+        for (Usuario user : usuario) {
+            if (user != null && user.nombre.equals(editar)) {
+                user.rol = nuevoUsuario[0];
+                user.nombre = nuevoUsuario[1];
+                user.usuario = nuevoUsuario[2];
+                user.contraseña = nuevoUsuario[3];
+                System.out.println("Usuario editado");
+                fin = true;
+            }
+        }
+        try {
+            ObjectOutputStream fichero = new ObjectOutputStream(new FileOutputStream("usuarios.dat"));
+            // Con writeObject escribimos directamente todo el array de Usuario
+            fichero.writeObject(usuario);
+            // Cerramos el fichero
+            fichero.close();
+        } catch (Exception e) {
+            System.out.println("Error al abrir o leer el fichero");
+        }
     }
 }
