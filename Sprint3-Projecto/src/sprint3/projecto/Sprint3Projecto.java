@@ -27,25 +27,31 @@ public class Sprint3Projecto {
      */
     public static void main(String[] args) {
         File fichero = new File("Registros/classroom.txt");
-        usuarios();
-        int []posicion = menuInicio();
-        if(posicion[1] == 0){
-            System.out.println("Usuario o contraseña introducidos erroneos");
-            posicion = menuInicio();
-            ingresarUsuario(fichero, posicion[0]);
-        }else{
-            System.out.println("Usuario y contraseña correctos");
-        ingresarUsuario(fichero, posicion[0]);
+        boolean fin = false;
+        try {
+            ObjectInputStream archivo = new ObjectInputStream(new FileInputStream("usuarios.dat"));
+            Usuario[] comprobante = (Usuario[]) archivo.readObject();
+            for (int i = 0; fin != true || comprobante == null; i++) {
+                if (comprobante[i] != null) {
+                    fin = true;
+                    System.out.println("Izi");
+                    usuarios();
+                    ingresarUsuario(fichero);
+                    
+                } else {
+                    System.out.println("Eres pete");
+                    usuarios();
+                    ingresarUsuario(fichero);
+                }
+            }
+            archivo.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error al abrir o leer el fichero");
         }
+
     }
 
-    /**
-     * Esta funcion se encarga de comparar si el usuario es un admin o un
-     * profesor y mostar el menu correspondiente
-     *
-     * @param fichero datos del documento classroom.txt
-     * @param posicion posicion en la que se encuentra el usuario en el array
-     */
     //--------------------------------------SPRINT 1---------------------------------------------------
     /**
      * Funcion que permite leer el fichero
@@ -120,7 +126,8 @@ public class Sprint3Projecto {
                     eliminarRegistro(fichero);
                     break;
                 case 5:
-                    menuInicio();
+                    ingresarUsuario(fichero);
+                    salir = true;
                 case 6:
                     salir = true;
                     break;
@@ -301,50 +308,67 @@ public class Sprint3Projecto {
     }
 
     //--------------------------------------SPRINT 3---------------------------------------------------
-    private static void ingresarUsuario(File fichero, int posicion) {
-        //variable para finalizar bucle
-        boolean fin = false;
-        try {
-            while (fin != true) {
+    /**
+     * Esta funcion se encarga de comparar si el usuario es un admin o un
+     * profesor y mostar el menu correspondiente
+     *
+     * @param fichero datos del documento classroom.txt
+     * @param posicion posicion en la que se encuentra el usuario en el array
+     */
+    private static void ingresarUsuario(File fichero) {
+        int posicion = menuInicio(fichero);
+  
+            //variable para finalizar bucle
+            boolean fin = false;
+            try {
+                ObjectInputStream archivo = new ObjectInputStream(new FileInputStream("usuarios.dat"));
+                Usuario[] comprobante = (Usuario[]) archivo.readObject();
+
                 //comparar el usuario con las dos opciones dependiando cual sea mostrara un menu distinto
-                if (usuario[posicion].rol.equals("Administrador")) {
-                    menuAdministrador(posicion);
-                    fin = true;
-                } else if (usuario[posicion].rol.equals("Profesor")) {
+                if (comprobante[posicion].rol.equals("Administrador")) {
+                    menuAdministrador(posicion, fichero);
+                } else if (comprobante[posicion].rol.equals("Profesor")) {
                     menuProfesor(fichero, posicion);
-                    fin = true;
                 }
+
+                archivo.close();
+            } catch (Exception e) {
+                System.out.println("Error al abrir o leer el fichero");
             }
-        } catch (Exception e) {
-            System.out.println("Error al abrir o leer el fichero");
         }
-    }
+    
 
     /**
      * Esta funcion se encarga de prefuntar al usuario su usuario y contraseña
      *
      * @return devolvera la posicion del usuario en el array
      */
-    private static int[] menuInicio() {        
+    private static int menuInicio(File fichero) {
         Scanner lector = new Scanner(System.in);
         System.out.print("Ingrese el usuario: ");
         String usuarioIngresado = lector.nextLine().trim();
         System.out.print("Ingrese la contraseña: ");
         String contraseña = lector.next().trim();
-        int []posicion = new int[2];
+        int posicion = 0;
         //finalizar bucle
         boolean fin = false;
-        try {                   
+        try {
+            ObjectInputStream archivo = new ObjectInputStream(new FileInputStream("usuarios.dat"));
+            Usuario[] comprobante = (Usuario[]) archivo.readObject();
             //bucle para recorrer el array se detendra cuando ingrese en if o cuando se recorra todo el array
-            for (int i = 0; fin != true || i < usuario.length; i++) {
-                    if (usuarioIngresado.equals(usuario[i].usuario) && contraseña.equals(usuario[i].contraseña)) {
-                        posicion[0] = i;
-                        posicion[1] = 1;
-                        fin = true;                                    
+            for (int i = 0; fin != true || comprobante == null; i++) {
+                if (usuarioIngresado.equals(comprobante[i].usuario) && contraseña.equals(comprobante[i].contraseña)) {
+                    posicion = i;
+                    fin = true;
+                    System.out.println("Usuario y contraseña correctos");
                 }
-            }        
+            }
+
+            // Cerramos el fichero
+            archivo.close();
         } catch (Exception e) {
-            System.out.println("Error al abrir o leer el fichero");
+            System.out.println("Usuario o contraseña introducidos erroneos");
+            ingresarUsuario(fichero);
         }
         return posicion;
     }
@@ -355,7 +379,7 @@ public class Sprint3Projecto {
      *
      * @return devuelve la linea creada
      */
-    private static void menuAdministrador(int pos) {
+    private static void menuAdministrador(int pos, File fichero) {
         Scanner lector = new Scanner(System.in);
         boolean salir = false;
         int menu;
@@ -378,12 +402,13 @@ public class Sprint3Projecto {
                     mostrarUsuario();
                     break;
                 case 3:
-                    
+
                 case 4:
-                    
+
                     break;
                 case 5:
-                    menuInicio();
+                    ingresarUsuario(fichero);
+                    salir = true;
                     break;
                 case 6:
                     salir = true;
@@ -399,6 +424,7 @@ public class Sprint3Projecto {
      */
     private static void usuarios() {
         try {
+            ObjectOutputStream fichero = new ObjectOutputStream(new FileOutputStream("usuarios.dat"));
             usuario = new Usuario[100];
             usuario[0] = new Usuario();
             usuario[0].rol = "Administrador";
@@ -406,10 +432,14 @@ public class Sprint3Projecto {
             usuario[0].usuario = "joan00";
             usuario[0].contraseña = "1234";
             usuario[1] = new Usuario();
-            usuario[1].rol = "Administrador";
+            usuario[1].rol = "Profesor";
             usuario[1].nombre = "Matias";
             usuario[1].usuario = "mat01";
             usuario[1].contraseña = "12345";
+            // Con writeObject escribimos directamente todo el array de Usuario
+            fichero.writeObject(usuario);
+            // Cerramos el fichero
+            fichero.close();
         } catch (Exception e) {
             System.out.println("Error al abrir o leer el fichero");
         }
@@ -442,7 +472,7 @@ public class Sprint3Projecto {
      */
     private static void crearUsuario() {
         boolean comprobar = false;
-        String rol = "null", nombre ="null", nameuser="null", password="null";
+        String rol = "null", nombre = "null", nameuser = "null", password = "null";
         while (comprobar != true) {
             Scanner lector = new Scanner(System.in);
             System.out.print("Rol del usuario(Administrador/Profesor): ");
@@ -455,7 +485,7 @@ public class Sprint3Projecto {
             password = lector.nextLine().trim();
             //correccion de letras
             rol = rol.substring(0, 1).toUpperCase() + rol.substring(1);
-            nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1,nombre.indexOf(" ")) + nombre.substring(nombre.indexOf(" "), nombre.indexOf(" ") + 2).toUpperCase() + nombre.substring(nombre.indexOf(" ") + 2);
+            nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1, nombre.indexOf(" ")) + nombre.substring(nombre.indexOf(" "), nombre.indexOf(" ") + 2).toUpperCase() + nombre.substring(nombre.indexOf(" ") + 2);
             if (rol.equals("Administrador") || rol.equals("Profesor")) {
                 comprobar = true;
             } else {
@@ -465,7 +495,8 @@ public class Sprint3Projecto {
         boolean fin = false;
         int cont = 0;
         try {
-            while (fin != true) {
+            ObjectOutputStream fichero = new ObjectOutputStream(new FileOutputStream("usuarios.dat"));
+            for (int i = 0; fin != true || usuario[cont] == null; i++) {
                 cont++;
                 if (usuario[cont] == null) {
                     usuario[cont] = new Usuario();
@@ -473,10 +504,14 @@ public class Sprint3Projecto {
                     usuario[cont].nombre = nombre;
                     usuario[cont].usuario = nameuser;
                     usuario[cont].contraseña = password;
-                    fin = true;                   
+                    fin = true;
                     System.out.println("Usuario creado");
                 }
-            }           
+            }
+            // Con writeObject escribimos directamente todo el array de Usuario
+            fichero.writeObject(usuario);
+            // Cerramos el fichero
+            fichero.close();
         } catch (Exception e) {
             System.out.println("Error al abrir o leer el fichero");
         }
