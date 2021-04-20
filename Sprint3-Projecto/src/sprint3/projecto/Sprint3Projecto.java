@@ -37,7 +37,7 @@ public class Sprint3Projecto {
      * @param fichero archivo classroom.txt donde se alnacenan los datos de las
      * aulas
      */
-    private static void LeerClassroom(File fichero) {
+    private static void leerClassroom(File fichero) {
         //numLineas sera necesario para contar los registros
         int numLineas = 0;
         // Se intentara leer el archivo classroom.txt
@@ -88,7 +88,7 @@ public class Sprint3Projecto {
             System.out.println("Error al abrir o leer el fichero");
         }
         do {
-            System.out.println("\nBienvenido " + usuario[pos].rol);
+            System.out.println("Bienvenido " + usuario[pos].rol);
             System.out.println("############ GESTION DE AULAS ##############");
             System.out.println("1)Ver los registros");
             System.out.println("2)Crear un registro");
@@ -100,19 +100,20 @@ public class Sprint3Projecto {
             menu = lector.nextInt();
             switch (menu) {
                 case 1:
-                    LeerClassroom(fichero);
+                    leerClassroom(fichero);
                     break;
                 case 2:
                     crearRegistro(fichero);
                     break;
                 case 3:
-                    EditarClassroom(fichero);
+                    editarClassroom(fichero);
                     break;
                 case 4:
                     eliminarRegistro(fichero);
                     break;
                 case 5:
                     ingresarUsuario(fichero);
+                    System.out.println("");
                     salir = true;
                 case 6:
                     salir = true;
@@ -151,14 +152,13 @@ public class Sprint3Projecto {
      * @param fichero archivo classroom.txt donde se almacenan los datos de las
      * aulas
      */
-    private static void EditarClassroom(File fichero) {
+    private static void editarClassroom(File fichero) {
         Scanner lector = new Scanner(System.in);
         String lineadeseada, lineanueva;
         // Se busca a partir del ID poder editar la fila donde este se encuentra
         // y que cualquier ID que escribas se convierta en mayusculas.
-        System.out.print("Introduce la linea que quieres editar: ");
-        lineadeseada = lector.next().trim();
-        lineadeseada = lineadeseada.toUpperCase().substring(0, 1) + lineadeseada.substring(1);
+        System.out.print("Introduce el ID del aula que quieres modificar: ");
+        lineadeseada = lector.next().trim().toUpperCase();
         // Array para guardar todas las líneas leídas del fichero
         ArrayList<String> lineas = new ArrayList<>();
         // Abrimos el fichero de texto para leerlo en memoria
@@ -215,7 +215,7 @@ public class Sprint3Projecto {
         //Le pedimos al usuario que ID quiere eliminar
         //Creamos un variable en donde se guarda el ID que quiere eliminar el usuario 
         String ID;
-        System.out.print("Introduce el ID la linea que quieres eliminar: ");
+        System.out.print("Introduce el ID del aula que quieres eliminar: ");
         ID = lector.next().trim().toUpperCase();//Elimina toda la linea del ID introducido
         // Array para guardar todos los registros leídos del fichero
         ArrayList<String> registros = new ArrayList<>();
@@ -264,28 +264,32 @@ public class Sprint3Projecto {
     private static String crearNuevalinea() {
         Scanner lector = new Scanner(System.in);
         String registroNuevo;
+        String cantidadPc;
         String[] cambiar = new String[3];
         System.out.println("Nuevo registro");
         System.out.print("ID: ");
-        String id = lector.next().trim();
+        String id = lector.next().trim().toUpperCase();
         System.out.print("Nombre de aula: ");
         String nombreAula = lector.next().trim();
         lector.nextLine();
         System.out.print("Capacidad de alumnos: ");
         String cantidadAlumnos = lector.next().trim();
         System.out.print("Hay pc's(Si/No): ");
-        cambiar[0] = lector.next().trim();
+        cambiar[0] = lector.next().trim().toLowerCase();
+        if(cambiar[0].equals("no")){
+            cantidadPc = "Null";
+        }else{
         System.out.print("Cantidad de pc's disponibles: ");
-        String cantidadPc = lector.next().trim();
+         cantidadPc = lector.next().trim();
+        }
         System.out.print("Hay proyector(Si/No): ");
-        cambiar[1] = lector.next().trim();
+        cambiar[1] = lector.next().trim().toLowerCase();
         System.out.print("El aula esta insonorizada(Si/No): ");
-        cambiar[2] = lector.next().trim();
+        cambiar[2] = lector.next().trim().toLowerCase();
         //Poner las primeras letras en mayuscula
         for (int i = 0; i < cambiar.length; i++) {
             cambiar[i] = cambiar[i].substring(0, 1).toUpperCase() + cambiar[i].charAt(1);
         }
-        id = id.substring(0, 1).toUpperCase() + id.substring(1);
         nombreAula = nombreAula.substring(0, 1).toUpperCase() + nombreAula.substring(1);
         //String donde se guarda la linea de datos en formato CSV
 
@@ -400,6 +404,7 @@ public class Sprint3Projecto {
                     break;
                 case 5:
                     ingresarUsuario(fichero);
+                    System.out.println("");
                     salir = true;
                     break;
                 case 6:
@@ -531,7 +536,6 @@ public class Sprint3Projecto {
     }
 
     //--------------------------------------SPRINT 4---------------------------------------------------
-    //--------------------------------------SPRINT 4---------------------------------------------------
     private static void editarUsuario() {
         Scanner lector = new Scanner(System.in);
         Usuario[] usuario = null;
@@ -568,3 +572,4 @@ public class Sprint3Projecto {
         }
     }
 }
+
