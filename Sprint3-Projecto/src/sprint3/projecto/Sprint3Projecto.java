@@ -26,7 +26,27 @@ public class Sprint3Projecto {
     public static void main(String[] args) {
         File fichero = new File("Registros/classroom.txt");
         boolean fin = false;
-        ingresarUsuario(fichero);
+        Usuario[] usuario = null;
+        boolean comprobar = false;
+       
+        try {
+            ObjectInputStream archivo = new ObjectInputStream(new FileInputStream("usuarios.dat"));
+            usuario = (Usuario[]) archivo.readObject();
+            archivo.close();
+        } catch (Exception e) {
+            System.out.println("Error al abrir o leer el fichero");
+        }
+        for (int i = 0; comprobar != true; i++) {
+            if(usuario[i] != null){
+                ingresarUsuario(fichero);
+                comprobar = true;
+            }else{
+                usuarios();
+                ingresarUsuario(fichero);
+                comprobar = true;
+            }
+        }
+        
 
     }
 
@@ -382,7 +402,7 @@ public class Sprint3Projecto {
             System.out.println("Bienvenido " + usuario[pos].nombre);
             System.out.println("############ GESTION DE USUARIOS ##############");
             System.out.println("1)Crear usuario");
-            System.out.println("2)Enumerar usuarios");
+            System.out.println("2)Listar usuarios");
             System.out.println("3)Modificar usuario");
             System.out.println("4)Eliminar usuario");
             System.out.println("5)Cerrar sesión");
@@ -509,7 +529,10 @@ public class Sprint3Projecto {
             System.out.println("Error al abrir o leer el fichero");
         }
     }
-
+    /**
+     * Esta funcion pide al usuario los datos para un nuevo usuario y los guarda en una array
+     * @return devuelve el array con los datos cargados
+     */
     private static String[] nuevoUsuario() {
         boolean comprobar = false;
         String nuevoUsuario[] = new String[4];
@@ -536,6 +559,10 @@ public class Sprint3Projecto {
     }
 
     //--------------------------------------SPRINT 4---------------------------------------------------
+    /**
+     * Esta funcion se encarga de solicitar el nombre del usuario que desea editar, luego lo
+     * edita con los nuevos parametros
+     */
     private static void editarUsuario() {
         Scanner lector = new Scanner(System.in);
         Usuario[] usuario = null;
@@ -635,5 +662,5 @@ public class Sprint3Projecto {
 
     }
 }
-}
+
 
