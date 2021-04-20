@@ -607,12 +607,17 @@ public class Sprint3Projecto {
         }
 
         // AMPLIACIÓN: Comprobar si se ha encontrado o no ese usuario a borrar e informar al usuario
+        boolean comprobar = true; 
         for (Usuario user : usuario) {
             if (user != null && user.nombre.equals(nombreBorrar)) {
+                comprobar = false;
+            }
+        }
+            if (comprobar == false) {
                 System.out.println("ERROR. No se ha borrado correctamente el Usuario");
             } else {
                 System.out.println("Se ha borrado correctamente el usuario");
-            }
+        }
         // GUARDAR FICHERO
         try {
             // A partir de aquí accederemos al fichero a guardar mediante la variable fichero
