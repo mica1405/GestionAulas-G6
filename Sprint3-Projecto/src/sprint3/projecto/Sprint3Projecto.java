@@ -378,7 +378,7 @@ public class Sprint3Projecto {
             System.out.println("\nBienvenido " + usuario[pos].nombre);
             System.out.println("############ GESTION DE USUARIOS ##############");
             System.out.println("1)Crear usuario");
-            System.out.println("2)Listar usuarios");
+            System.out.println("2)Enumerar usuarios");
             System.out.println("3)Modificar usuario");
             System.out.println("4)Eliminar usuario");
             System.out.println("5)Cerrar sesión");
@@ -393,7 +393,8 @@ public class Sprint3Projecto {
                     mostrarUsuario();
                     break;
                 case 3:
-
+                    editarUsuario();
+                    break;
                 case 4:
 
                     break;
