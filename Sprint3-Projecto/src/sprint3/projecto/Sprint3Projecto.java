@@ -400,7 +400,7 @@ public class Sprint3Projecto {
                     editarUsuario();
                     break;
                 case 4:
-
+                    eliminarUsuario();
                     break;
                 case 5:
                     ingresarUsuario(fichero);
@@ -458,7 +458,7 @@ public class Sprint3Projecto {
 
         System.out.println("------------------------------------------------------------");
         for (Usuario user : usuario) {
-            if (user != null) {
+            if (user != null && !user.rol.equalsIgnoreCase(" ")) {
                 contuser++;
                 System.out.print(contuser + ")Rol: " + user.rol + " | ");
                 System.out.print("Nombre: " + user.nombre + " | ");
@@ -489,7 +489,7 @@ public class Sprint3Projecto {
         }
         for (int i = 0; fin != true || usuario[cont] == null; i++) {
             cont++;
-            if (usuario[cont] == null) {
+            if (usuario[cont] == null || usuario[cont].equals(" ")) {
                 usuario[cont] = new Usuario();
                 usuario[cont].rol = nuevoUsuario[0];
                 usuario[cont].nombre = nuevoUsuario[1];
@@ -570,6 +570,58 @@ public class Sprint3Projecto {
         } catch (Exception e) {
             System.out.println("Error al abrir o leer el fichero");
         }
+    }
+    public static void eliminarUsuario ()   {
+        Scanner lector = new Scanner(System.in);
+        Usuario[] usuario = null;
+        
+        try {
+            //Aquí accederemos al fichero a leer mediante la variable fichero
+            ObjectInputStream fichero = new ObjectInputStream(new FileInputStream("usuarios.dat"));
+
+            // Y rellenamos con lo recuperado de leer el fichero mediante readObject
+            // readObject recibe todo un array de Empleados y por eso lo casteamos (Empleado[])
+            usuario = (Usuario[]) fichero.readObject();
+
+            // Cerramos el fichero
+            fichero.close();
+
+        } catch (Exception e) {
+            System.out.println("Error al abrir o leer el fichero");
+        }
+        
+        // BORRAR DATOS
+        // Buscaremos por la clave primaria o varios campos, en este caso por Nombre y borraremos el registro
+        System.out.print("Introduce el nombre del empleado a despedir: ");
+        String nombreBorrar = lector.nextLine();
+        
+        for (Usuario user : usuario) {
+            if (user != null && user.nombre.equals(nombreBorrar)) {
+                user.rol = " ";
+                user.nombre = " ";
+                user.usuario = " ";
+                user.contraseña = " ";
+                user = null;
+                System.out.println("Se ha despedido al siguiente empleado sin problemas: " + nombreBorrar);
+            }
+        }
+
+        // AMPLIACIÓN: Comprobar si se ha encontrado o no ese usuario a borrar e informar al usuario
+        // GUARDAR FICHERO
+        try {
+            // A partir de aquí accederemos al fichero a guardar mediante la variable fichero
+            ObjectOutputStream fichero = new ObjectOutputStream(new FileOutputStream("usuarios.dat"));
+
+            // Con writeObject escribimos directamente todo el array de Empleados
+            fichero.writeObject(usuario);
+
+            // Cerramos el fichero
+            fichero.close();
+
+        } catch (Exception e) {
+            System.out.println("Ha ocurrido un error al guardar el fichero");
+        }
+
     }
 }
 
