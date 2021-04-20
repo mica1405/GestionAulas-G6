@@ -375,7 +375,7 @@ public class Sprint3Projecto {
             System.out.println("Error al abrir o leer el fichero");
         }
         do {
-            System.out.println("\nBienvenido " + usuario[pos].nombre);
+            System.out.println("Bienvenido " + usuario[pos].nombre);
             System.out.println("############ GESTION DE USUARIOS ##############");
             System.out.println("1)Crear usuario");
             System.out.println("2)Enumerar usuarios");
@@ -423,7 +423,7 @@ public class Sprint3Projecto {
         usuario[0].contraseña = "1234";
         usuario[1] = new Usuario();
         usuario[1].rol = "Profesor";
-        usuario[1].nombre = "Matias";
+        usuario[1].nombre = "Matias Martinez";
         usuario[1].usuario = "mat01";
         usuario[1].contraseña = "12345";
         try {
