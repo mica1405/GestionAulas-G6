@@ -25,10 +25,11 @@ public class Sprint3Projecto {
      */
     public static void main(String[] args) {
         File fichero = new File("Registros/classroom.txt");
+        //File fichero = crearFichero();
         boolean fin = false;
         Usuario[] usuario = null;
         boolean comprobar = false;
-       
+
         try {
             ObjectInputStream archivo = new ObjectInputStream(new FileInputStream("usuarios.dat"));
             usuario = (Usuario[]) archivo.readObject();
@@ -37,16 +38,15 @@ public class Sprint3Projecto {
             System.out.println("Error al abrir o leer el fichero");
         }
         for (int i = 0; comprobar != true; i++) {
-            if(usuario[i] != null){
+            if (usuario[i] != null) {
                 ingresarUsuario(fichero);
                 comprobar = true;
-            }else{
+            } else {
                 usuarios();
                 ingresarUsuario(fichero);
                 comprobar = true;
             }
         }
-        
 
     }
 
@@ -142,6 +142,26 @@ public class Sprint3Projecto {
                     System.out.println("Vuelva a escribir una opcion valida.");
             }
         } while (salir != true);
+    }
+
+    private static File crearFichero() {
+        File fichero = new File("Registros/classroom.txt");
+
+        try {
+            FileWriter writer = new FileWriter(fichero);
+
+            writer.write("M08,Aula11,25,Si,25,Si,No\n");
+            writer.write("M09,Aula10,30,Si,32,Si,Si\n");
+            writer.write("M12,Aula26,25,Si,28,Si,No\n");
+            writer.write("M04,Aula30,25,Si,27,Si,No\n");
+            writer.write("FOL,Aula25,25,No,Null,Si,Si\n");
+            writer.write("EIE,Aula25,25,No,Null,Si,No\n");
+            
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("Ha ocurrido un error al crear/escribir en el fichero");
+        }
+        return fichero;
     }
 
     /**
@@ -296,11 +316,11 @@ public class Sprint3Projecto {
         String cantidadAlumnos = lector.next().trim();
         System.out.print("Hay pc's(Si/No): ");
         cambiar[0] = lector.next().trim().toLowerCase();
-        if(cambiar[0].equals("no")){
+        if (cambiar[0].equals("no")) {
             cantidadPc = "Null";
-        }else{
-        System.out.print("Cantidad de pc's disponibles: ");
-         cantidadPc = lector.next().trim();
+        } else {
+            System.out.print("Cantidad de pc's disponibles: ");
+            cantidadPc = lector.next().trim();
         }
         System.out.print("Hay proyector(Si/No): ");
         cambiar[1] = lector.next().trim().toLowerCase();
@@ -529,8 +549,11 @@ public class Sprint3Projecto {
             System.out.println("Error al abrir o leer el fichero");
         }
     }
+
     /**
-     * Esta funcion pide al usuario los datos para un nuevo usuario y los guarda en una array
+     * Esta funcion pide al usuario los datos para un nuevo usuario y los guarda
+     * en una array
+     *
      * @return devuelve el array con los datos cargados
      */
     private static String[] nuevoUsuario() {
@@ -560,8 +583,8 @@ public class Sprint3Projecto {
 
     //--------------------------------------SPRINT 4---------------------------------------------------
     /**
-     * Esta funcion se encarga de solicitar el nombre del usuario que desea editar, luego lo
-     * edita con los nuevos parametros
+     * Esta funcion se encarga de solicitar el nombre del usuario que desea
+     * editar, luego lo edita con los nuevos parametros
      */
     private static void editarUsuario() {
         Scanner lector = new Scanner(System.in);
@@ -598,10 +621,14 @@ public class Sprint3Projecto {
             System.out.println("Error al abrir o leer el fichero");
         }
     }
-    public static void eliminarUsuario ()   {
+
+    /**
+     * Esta funcion se encarga de eliminar un usuario
+     */
+    public static void eliminarUsuario() {
         Scanner lector = new Scanner(System.in);
         Usuario[] usuario = null;
-        
+
         try {
             //Aquí accederemos al fichero a leer mediante la variable fichero
             ObjectInputStream fichero = new ObjectInputStream(new FileInputStream("usuarios.dat"));
@@ -616,12 +643,12 @@ public class Sprint3Projecto {
         } catch (Exception e) {
             System.out.println("Error al abrir o leer el fichero");
         }
-        
+
         // BORRAR DATOS
         // Buscaremos por la clave primaria o varios campos, en este caso por Nombre y borraremos el registro
         System.out.print("Introduce el nombre del empleado a despedir: ");
         String nombreBorrar = lector.nextLine();
-        
+        nombreBorrar = nombreBorrar.substring(0, 1).toUpperCase() + nombreBorrar.substring(1, nombreBorrar.indexOf(" ")) + nombreBorrar.substring(nombreBorrar.indexOf(" "), nombreBorrar.indexOf(" ") + 2).toUpperCase() + nombreBorrar.substring(nombreBorrar.indexOf(" ") + 2);
         for (Usuario user : usuario) {
             if (user != null && user.nombre.equals(nombreBorrar)) {
                 user.rol = " ";
@@ -634,16 +661,16 @@ public class Sprint3Projecto {
         }
 
         // AMPLIACIÓN: Comprobar si se ha encontrado o no ese usuario a borrar e informar al usuario
-        boolean comprobar = true; 
+        boolean comprobar = true;
         for (Usuario user : usuario) {
             if (user != null && user.nombre.equals(nombreBorrar)) {
                 comprobar = false;
             }
         }
-            if (comprobar == false) {
-                System.out.println("ERROR. No se ha borrado correctamente el Usuario");
-            } else {
-                System.out.println("Se ha borrado correctamente el usuario");
+        if (comprobar == false) {
+            System.out.println("ERROR. No se ha borrado correctamente el Usuario");
+        } else {
+            System.out.println("Se ha borrado correctamente el usuario");
         }
         // GUARDAR FICHERO
         try {
@@ -662,5 +689,3 @@ public class Sprint3Projecto {
 
     }
 }
-
-
