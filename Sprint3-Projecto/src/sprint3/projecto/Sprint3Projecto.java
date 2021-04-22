@@ -26,28 +26,19 @@ public class Sprint3Projecto {
     public static void main(String[] args) {
         File fichero = new File("Registros/classroom.txt");
         //File fichero = crearFichero();
+        boolean encontrarFichero = fichero.exists();
+        if (encontrarFichero == false) {
+            fichero = crearFichero();
+        }
         boolean fin = false;
         Usuario[] usuario = null;
         boolean comprobar = false;
-
-        try {
-            ObjectInputStream archivo = new ObjectInputStream(new FileInputStream("usuarios.dat"));
-            usuario = (Usuario[]) archivo.readObject();
-            archivo.close();
-        } catch (Exception e) {
-            System.out.println("Error al abrir o leer el fichero");
+        File ficheroUsuario = new File("usuarios.dat");
+        boolean comprobarUsuario = ficheroUsuario.exists();
+        if (comprobarUsuario == false) {
+            usuarios();
         }
-        for (int i = 0; comprobar != true; i++) {
-            if (usuario[i] != null) {
-                ingresarUsuario(fichero);
-                comprobar = true;
-            } else {
-                usuarios();
-                ingresarUsuario(fichero);
-                comprobar = true;
-            }
-        }
-
+        int posicion = menuInicio(fichero);
     }
 
     //--------------------------------------SPRINT 1---------------------------------------------------
@@ -108,7 +99,7 @@ public class Sprint3Projecto {
             System.out.println("Error al abrir o leer el fichero");
         }
         do {
-            System.out.println("Bienvenido " + usuario[pos].rol);
+            System.out.println("Bienvenido " + usuario[pos].nombre);
             System.out.println("############ GESTION DE AULAS ##############");
             System.out.println("1)Ver los registros");
             System.out.println("2)Crear un registro");
@@ -132,7 +123,7 @@ public class Sprint3Projecto {
                     eliminarRegistro(fichero);
                     break;
                 case 5:
-                    ingresarUsuario(fichero);
+                    ingresarUsuario(fichero, pos);
                     System.out.println("");
                     salir = true;
                 case 6:
@@ -156,7 +147,7 @@ public class Sprint3Projecto {
             writer.write("M04,Aula30,25,Si,27,Si,No\n");
             writer.write("FOL,Aula25,25,No,Null,Si,Si\n");
             writer.write("EIE,Aula25,25,No,Null,Si,No\n");
-            
+
             writer.close();
         } catch (Exception e) {
             System.out.println("Ha ocurrido un error al crear/escribir en el fichero");
@@ -345,8 +336,7 @@ public class Sprint3Projecto {
      * @param fichero datos del documento classroom.txt
      * @param posicion posicion en la que se encuentra el usuario en el array
      */
-    private static void ingresarUsuario(File fichero) {
-        int posicion = menuInicio(fichero);
+    private static void ingresarUsuario(File fichero, int posicion) {
         Usuario[] comprobante = null;
         //variable para finalizar bucle
         boolean fin = false;
@@ -372,12 +362,14 @@ public class Sprint3Projecto {
      */
     private static int menuInicio(File fichero) {
         Scanner lector = new Scanner(System.in);
+        System.out.println("############ LOGIN ##############");
         System.out.print("Ingrese el usuario: ");
         String usuarioIngresado = lector.nextLine().trim();
         System.out.print("Ingrese la contraseña: ");
         String contraseña = lector.next().trim();
         Usuario[] comprobante = null;
         int posicion = 0;
+        boolean comprobar = false;
         //finalizar bucle
         boolean fin = false;
         try {
@@ -386,16 +378,25 @@ public class Sprint3Projecto {
             // Cerramos el fichero
             archivo.close();
         } catch (Exception e) {
-            System.out.println("Usuario o contraseña introducidos erroneos");
-            ingresarUsuario(fichero);
+            System.out.println("Error al leer el archivo");
         }
-        //bucle para recorrer el array se detendra cuando ingrese en if o cuando se recorra todo el array
-        for (int i = 0; fin != true || comprobante == null; i++) {
-            if (usuarioIngresado.equals(comprobante[i].usuario) && contraseña.equals(comprobante[i].contraseña)) {
-                posicion = i;
-                fin = true;
-                System.out.println("Usuario y contraseña correctos");
+        //bucle para recorrer el array se detendra cuando ingrese en if o cuando se recorra todo el array 
+
+        for (int i = 0; fin != true && i < comprobante.length; i++) {
+            if (comprobante[i] != null && comprobante[i].usuario != null) {
+                if (usuarioIngresado.equals(comprobante[i].usuario) && contraseña.equals(comprobante[i].contraseña)) {
+                    posicion = i;
+                    comprobar = true;
+                    fin = true;
+                }
             }
+        }
+        if (comprobar == true) {
+            System.out.println("Usuario y contraseña correctos");
+            ingresarUsuario(fichero, posicion);
+        } else {
+            System.out.println("Usuario o contraseña introducidos erroneos");
+            menuInicio(fichero);
         }
         return posicion;
     }
@@ -443,7 +444,7 @@ public class Sprint3Projecto {
                     eliminarUsuario();
                     break;
                 case 5:
-                    ingresarUsuario(fichero);
+                    ingresarUsuario(fichero, pos);
                     System.out.println("");
                     salir = true;
                     break;
