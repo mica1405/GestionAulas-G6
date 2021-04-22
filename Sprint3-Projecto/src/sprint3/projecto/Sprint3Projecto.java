@@ -644,23 +644,28 @@ public class Sprint3Projecto {
         } catch (Exception e) {
             System.out.println("Error al abrir o leer el fichero");
         }
-
+        boolean fin = false;
+        String nombreBorrar = "";
         // BORRAR DATOS
         // Buscaremos por la clave primaria o varios campos, en este caso por Nombre y borraremos el registro
-        System.out.print("Introduce el nombre del empleado a despedir: ");
-        String nombreBorrar = lector.nextLine();
-        nombreBorrar = nombreBorrar.substring(0, 1).toUpperCase() + nombreBorrar.substring(1, nombreBorrar.indexOf(" ")) + nombreBorrar.substring(nombreBorrar.indexOf(" "), nombreBorrar.indexOf(" ") + 2).toUpperCase() + nombreBorrar.substring(nombreBorrar.indexOf(" ") + 2);
-        for (Usuario user : usuario) {
-            if (user != null && user.nombre.equals(nombreBorrar)) {
-                user.rol = " ";
-                user.nombre = " ";
-                user.usuario = " ";
-                user.contraseña = " ";
-                user = null;
-                System.out.println("Se ha despedido al siguiente empleado sin problemas: " + nombreBorrar);
+        while (fin != true) {
+            System.out.print("Introduce el nombre del usuario a eliminar: ");
+            nombreBorrar = lector.nextLine();
+            nombreBorrar = nombreBorrar.substring(0, 1).toUpperCase() + nombreBorrar.substring(1, nombreBorrar.indexOf(" ")) + nombreBorrar.substring(nombreBorrar.indexOf(" "), nombreBorrar.indexOf(" ") + 2).toUpperCase() + nombreBorrar.substring(nombreBorrar.indexOf(" ") + 2);
+            for (Usuario user : usuario) {
+                if (user != null && user.nombre.equals(nombreBorrar)) {
+                    user.rol = " ";
+                    user.nombre = " ";
+                    user.usuario = " ";
+                    user.contraseña = " ";
+                    user = null;
+                    fin = true;
+                }
+            }
+            if (fin == false) {
+                System.out.println("Nombre incorrecto");
             }
         }
-
         // AMPLIACIÓN: Comprobar si se ha encontrado o no ese usuario a borrar e informar al usuario
         boolean comprobar = true;
         for (Usuario user : usuario) {
@@ -671,8 +676,9 @@ public class Sprint3Projecto {
         if (comprobar == false) {
             System.out.println("ERROR. No se ha borrado correctamente el Usuario");
         } else {
-            System.out.println("Se ha borrado correctamente el usuario");
+            System.out.println("Se ha eliminado correctamente el usuario");
         }
+
         // GUARDAR FICHERO
         try {
             // A partir de aquí accederemos al fichero a guardar mediante la variable fichero
@@ -687,6 +693,5 @@ public class Sprint3Projecto {
         } catch (Exception e) {
             System.out.println("Ha ocurrido un error al guardar el fichero");
         }
-
     }
 }
