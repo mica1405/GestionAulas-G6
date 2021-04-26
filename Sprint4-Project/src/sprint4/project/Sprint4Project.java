@@ -83,7 +83,6 @@ public class Sprint3Projecto {
     //--------------------------------------SPRINT 2---------------------------------------------------
     /**
      * Esta funcion muestra al usuario el menu para profesores
-     *
      * @param fichero documento classroom.txt
      * @param pos posicion del usuario en el array
      */
